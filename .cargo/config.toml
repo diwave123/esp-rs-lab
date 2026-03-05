@@ -1,0 +1,18 @@
+[target.xtensa-esp32s3-none-elf]
+runner = "espflash flash --monitor --chip esp32s3"
+linker = "C:\\Users\\Lenovo\\.rustup\\toolchains\\esp\\xtensa-esp-elf\\bin\\xtensa-esp32s3-elf-gcc.exe"
+
+[env]
+DEFMT_LOG="info"
+ESP_LOG="info"
+
+[build]
+rustflags = [
+  "-C", "force-frame-pointers",
+  "-C", "link-arg=-nostartfiles",
+]
+
+target = "xtensa-esp32s3-none-elf"
+
+[unstable]
+build-std = ["core"]
