@@ -8,6 +8,9 @@ cargo run -p led-chaser --release -- --port COM4
 
 # 运行 Hello World
 cargo run -p hello-world --release -- --port COM4
+
+# 运行 VEML7700 光强检测
+cargo run -p veml7700 --release -- --port COM4
 ```
 
 ---

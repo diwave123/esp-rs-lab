@@ -1,0 +1,15 @@
+    Checking veml7700 v0.1.0 (D:\workspace\tmp\rust\esp-rs-lab\apps\veml7700)
+error[E0599]: no method named `read_illuminance` found for struct `Veml7700<I2C>` in the current scope
+  --> apps\veml7700\src\main.rs:42:22
+   |
+42 |         match sensor.read_illuminance() {
+   |                      ^^^^^^^^^^^^^^^^
+   |
+help: there is a method `read_lux` with a similar name
+   |
+42 -         match sensor.read_illuminance() {
+42 +         match sensor.read_lux() {
+   |
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `veml7700` (bin "veml7700") due to 1 previous error
