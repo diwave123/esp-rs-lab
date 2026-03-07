@@ -21,7 +21,10 @@ cargo run -p veml6040-app --release -- --port COMx
 # 4. 运行温湿度/气压计 (AHT20 + BMP280)
 cargo run -p aht20-bmp280-app --release -- --port COMx
 
-# 4. 运行基础 Hello World
+# 5. 运行电容式土壤湿度传感器
+cargo run -p soil-sensor --release -- --port COMx
+
+# 6. 运行基础 Hello World
 cargo run -p hello-world --release -- --port COMx
 ```
 

@@ -1,0 +1,16 @@
+    Checking soil-sensor v0.1.0 (D:\workspace\tmp\rust\esp-rs-lab\apps\soil-sensor)
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `nb`
+  --> apps\soil-sensor\src\main.rs:29:30
+   |
+29 |         let pin_value: u16 = nb::block!(adc1.read_oneshot(&mut adc_pin)).unwrap();
+   |                              ^^ use of unresolved module or unlinked crate `nb`
+
+error[E0599]: no variant or associated item named `Attenuation11dB` found for enum `Attenuation` in the current scope
+  --> apps\soil-sensor\src\main.rs:24:78
+   |
+24 |     let mut adc_pin = adc1_config.enable_pin(peripherals.GPIO3, Attenuation::Attenuation11dB);
+   |                                                                              ^^^^^^^^^^^^^^^ variant or associated item not found in `Attenuation`
+
+Some errors have detailed explanations: E0433, E0599.
+For more information about an error, try `rustc --explain E0433`.
+error: could not compile `soil-sensor` (bin "soil-sensor") due to 2 previous errors
