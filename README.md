@@ -18,6 +18,9 @@ cargo run -p veml7700-app --release -- --port COMx
 # 3. 运行颜色传感器 (VEML6040)
 cargo run -p veml6040-app --release -- --port COMx
 
+# 4. 运行温湿度/气压计 (AHT20 + BMP280)
+cargo run -p aht20-bmp280-app --release -- --port COMx
+
 # 4. 运行基础 Hello World
 cargo run -p hello-world --release -- --port COMx
 ```
@@ -38,6 +41,7 @@ cargo run -p hello-world --release -- --port COMx
   - `led-chaser`: 基础 GPIO 控制示例。
   - `veml7700-app`: 环境光检测。
   - `veml6040-app`: RGBW 四通道颜色检测（支持自适应量程）。
+  - `aht20-bmp280-app`: 高精度温湿度及大气压强监测。
 - **.github/workflows/rust.yml** : 适配 ESP32-S3 的 GitHub Actions 自动构建脚本。
 
 ## 🛠️ 技术栈

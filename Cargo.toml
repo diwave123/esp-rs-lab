@@ -4,6 +4,7 @@ members = [
     "apps/hello-world",
     "apps/veml7700",
     "apps/veml6040",
+    "apps/aht20-bmp280",
 ]
 resolver = "2"
 
