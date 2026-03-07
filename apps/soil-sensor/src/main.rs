@@ -24,12 +24,32 @@ fn main() -> ! {
     let mut adc_pin = adc1_config.enable_pin(peripherals.GPIO3, Attenuation::_11dB);
     let mut adc1 = Adc::new(peripherals.ADC1, adc1_config);
 
+    // Calibration thresholds for capacitive soil sensor
+    // These values should be adjusted based on actual dry air / submerged in water tests
+    const DRY_AIR_ADC: u16 = 3000;  // 传感器暴露在空气中（极干）时的读数参考值
+    const WATER_ADC: u16 = 1500;    // 传感器浸泡在水中（极湿）时的读数参考值
+
     loop {
         // Read the analog value (12-bit max on ESP32-S3 default: 0-4095)
         let pin_value: u16 = nb::block!(adc1.read_oneshot(&mut adc_pin)).unwrap();
         
         let voltage_mv = (pin_value as u32 * 3300) / 4095;
-        info!("ADC Value: {} | Approx Voltage: {} mV", pin_value, voltage_mv);
+        
+        // Calculate percentage (inverse relationship: lower ADC = higher moisture)
+        let mut percentage = 0;
+        if pin_value < WATER_ADC {
+            percentage = 100;
+        } else if pin_value > DRY_AIR_ADC {
+            percentage = 0;
+        } else {
+            // Linear interpolation between the two thresholds
+            percentage = 100 - ((pin_value - WATER_ADC) as u32 * 100 / (DRY_AIR_ADC - WATER_ADC) as u32);
+        }
+
+        info!(
+            "ADC: {:>4} | Voltage: {:>4} mV | Moisture: {:>3}%", 
+            pin_value, voltage_mv, percentage
+        );
         
         delay.delay_millis(1000);
     }
