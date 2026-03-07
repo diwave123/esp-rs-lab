@@ -1,6 +1,5 @@
 [target.xtensa-esp32s3-none-elf]
 runner = "espflash flash --monitor --chip esp32s3"
-linker = "C:\\Users\\HMAdmin\\.rustup\\toolchains\\esp\\xtensa-esp-elf\\bin\\xtensa-esp32s3-elf-gcc.exe"
 
 [env]
 DEFMT_LOG="info"
