@@ -37,7 +37,7 @@ cargo run -p hello-world --release -- --port COMx
 - **apps/** :
   - `led-chaser`: 基础 GPIO 控制示例。
   - `veml7700-app`: 环境光检测。
-  - `veml6040-app`: RGBW 四通道颜色检测。
+  - `veml6040-app`: RGBW 四通道颜色检测（支持自适应量程）。
 - **.github/workflows/rust.yml** : 适配 ESP32-S3 的 GitHub Actions 自动构建脚本。
 
 ## 🛠️ 技术栈

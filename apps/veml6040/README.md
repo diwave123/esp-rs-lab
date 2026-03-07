@@ -23,18 +23,21 @@
 cargo run -p veml6040-app --release -- --port COMx
 ```
 
-运行后，您应该能在串口输出中看到四通道（红、绿、蓝、白）的原始数值：
+运行后，您应该能在串口输出中看到包含当前积分时间 (IT) 的颜色数值：
 
 ```text
 INFO - Initializing I2C...
-INFO - Initializing VEML6040...
-INFO - R: 486, G: 480, B: 227, W: 1545
+INFO - Initializing VEML6040 with Auto-Ranging...
+INFO - [IT: 160ms] R: 486, G: 480, B: 227, W: 1545
 ...
 ```
 
-## 核心配置：积分时间 (Integration Time)
+## 核心功能：自适应量程 (Auto-Ranging)
 
-VEML6040 的测量范围由积分时间决定。若数值显示为 `65535`，说明传感器已饱和，需减小积分时间。
+本案例实现了自动调整积分时间（IT）的逻辑，以应对不同的光强环境：
+
+- **太亮时**（White > 60,000）：自动缩短积分时间（最低至 40ms），增加测量量程。
+- **太暗时**（White < 2,000）：自动增加积分时间（最高至 640ms），提高检测灵敏度。
 
 | 积分时间 (IT) | 配置值 (Hex) | 灵敏度 | 最大勒克斯 (约) | 适用场景      |
 | :------------ | :----------- | :----- | :-------------- | :------------ |
@@ -44,15 +47,20 @@ VEML6040 的测量范围由积分时间决定。若数值显示为 `65535`，说
 | 320 ms        | 0x30         | 较高   | 2062            | 较暗环境      |
 | 640 ms        | 0x40         | 最高   | 1031            | 极暗环境      |
 
-> **当前配置：** 默认为 `40ms` (0x00)，以获得最大的测量动态范围。
+## 技术文档
+
+在 `docs/` 目录下存放了官方技术参考文件：
+
+- [数据手册 (Datasheet)](./docs/veml6040_datasheet.pdf)
+- [设计指南 (Design Guide)](./docs/designing_veml6040.pdf)
 
 ## 技术说明
 
-- **本地驱动**：由于社区的 `veml6040` (v0.1.1) 库版本较旧，无法直接兼容 `esp-hal` v1.0.0 使用的 `embedded-hal` v1.0 接口，因此本项目在 `main.rs` 中直接实现了一个轻量级的 I2C 驱动。
-- **App Descriptor**：项目中包含了 `build.rs` 以确保 ESP-IDF App Descriptor 被正确链接，保证 `espflash` 能够识别并烧录。
+- **本地驱动**：由于社区库版本较旧，本项目直接在 `main.rs` 中实现了一个支持自适应逻辑的轻量级驱动。
+- **App Descriptor**：包含 `build.rs` 以确保 ESP-IDF App Descriptor 正确链接，解决烧录识别问题。
 
 ## 依赖说明
 
-- [esp-hal](https://github.com/esp-rs/esp-hal): ESP 官方 Rust 硬件抽象层。
-- [esp-println](https://github.com/esp-rs/esp-println): 用于串口日志输出。
-- [esp-bootloader-esp-idf](https://github.com/esp-rs/esp-bootloader-esp-idf): 提供 App Descriptor 兼容支持。
+- [esp-hal](https://github.com/esp-rs/esp-hal): ESP 官方 Rust HAL。
+- [esp-println](https://github.com/esp-rs/esp-println): 串口日志输出。
+- [esp-bootloader-esp-idf](https://github.com/esp-rs/esp-bootloader-esp-idf): App Descriptor 支持。

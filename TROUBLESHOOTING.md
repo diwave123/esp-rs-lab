@@ -79,6 +79,14 @@ cargo run --release -- --port COM4
 - **对策**:
   - 降低积分时间 (Integration Time)。例如 VEML6040 从 160ms 改为 40ms，虽然灵敏度降低，但动态范围增加，能测更强的光。
 
+### H. 驱动开发：旧版传感器库不兼容 (v0.2 vs v1.0)
+
+- **现象**: 引入第三方传感器驱动（如 `veml6040`）时报错，提示 `embedded-hal` trait 不匹配。
+- **根本原因**: 许多旧库仍依赖 `embedded-hal 0.2.x`，而最新的 `esp-hal 1.0.0` 要求 `embedded-hal 1.0.0`。
+- **对策**:
+  - 简单的 I2C/SPI 驱动建议直接基于 `esp-hal` 的 I2C 接口重新实现（如本项目中的 `veml6040` 驱动）。
+  - 复杂驱动可尝试使用 `embedded-hal-compat` 适配层，或关注原仓库是否已有 `1.0` 支持的分支。
+
 ---
 
 ## 📁 文件说明
