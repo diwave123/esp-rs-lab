@@ -1164,7 +1164,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "77439c1b53d2303b20d9459b1ade71a83c716e3f9c34f3228c00e6f185d6c002"
 
 [[package]]
-name = "veml7700"
+name = "veml6040-app"
 version = "0.1.0"
 dependencies = [
  "critical-section",
@@ -1172,7 +1172,6 @@ dependencies = [
  "esp-hal",
  "esp-println",
  "log",
- "veml7700 0.3.1",
 ]
 
 [[package]]
@@ -1185,6 +1184,18 @@ dependencies = [
  "embedded-hal-async",
  "maybe-async",
  "micromath",
+]
+
+[[package]]
+name = "veml7700-app"
+version = "0.1.0"
+dependencies = [
+ "critical-section",
+ "esp-bootloader-esp-idf",
+ "esp-hal",
+ "esp-println",
+ "log",
+ "veml7700",
 ]
 
 [[package]]

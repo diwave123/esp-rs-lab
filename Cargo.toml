@@ -3,6 +3,7 @@ members = [
     "apps/led-chaser",
     "apps/hello-world",
     "apps/veml7700",
+    "apps/veml6040",
 ]
 resolver = "2"
 
