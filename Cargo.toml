@@ -5,6 +5,7 @@ members = [
     "apps/veml7700",
     "apps/veml6040",
     "apps/aht20-bmp280", "apps/soil-sensor",
+    "apps/wifi",
 ]
 resolver = "2"
 
